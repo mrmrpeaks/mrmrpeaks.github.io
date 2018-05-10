@@ -333,9 +333,9 @@ textarea {
   box-sizing: border-box;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 991px) {
   #DesktopAlbumCover {
-    display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+    display: none; 
   }
 }
 
