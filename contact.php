@@ -3,6 +3,8 @@
  *  CONFIGURE EVERYTHING HERE
  */
 
+
+
 // an email address that will be in the From field of the email.
 $from = 'Contact form <info@atlantic45.co.uk>';
 
@@ -22,6 +24,7 @@ $okMessage = 'Thanks for your message, we will get back to you soon!';
 // If something goes wrong, we will display this message.
 $errorMessage = 'Please fill in required fields and try submitting again';
 
+
 /*
  *  LET'S DO THE SENDING
  */
@@ -31,6 +34,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 try
 {
+    
 
     if(count($_POST) == 0) throw new \Exception('Form is empty');
             
