@@ -2,7 +2,9 @@
 /*
  *  CONFIGURE EVERYTHING HERE
  */
-
+// added
+// require ReCaptcha class
+require('recaptcha-master/src/autoload.php');
 
 
 // an email address that will be in the From field of the email.
@@ -25,6 +27,11 @@ $okMessage = 'Thanks for your message, we will get back to you soon!';
 $errorMessage = 'Please fill in required fields and try submitting again';
 
 
+//new
+// ReCaptch Secret
+$recaptchaSecret = '6Lct0pYUAAAAAFnGtowZIY7tMqbuq35C1b4q43Vc';
+
+
 /*
  *  LET'S DO THE SENDING
  */
@@ -37,6 +44,30 @@ try
     
 
     if(count($_POST) == 0) throw new \Exception('Form is empty');
+    
+    //new
+        // validate the ReCaptcha, if something is wrong, we throw an Exception,
+        // i.e. code stops executing and goes to catch() block
+        
+        if (!isset($_POST['g-recaptcha-response'])) {
+            throw new \Exception('ReCaptcha is not set.');
+        }
+
+        // do not forget to enter your secret key from https://www.google.com/recaptcha/admin
+        
+        $recaptcha = new \ReCaptcha\ReCaptcha($recaptchaSecret, new \ReCaptcha\RequestMethod\CurlPost());
+        
+        // we validate the ReCaptcha field together with the user's IP address
+        
+        $response = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+
+        if (!$response->isSuccess()) {
+            throw new \Exception('ReCaptcha was not validated.');
+        }
+      //end new    
+    
+    
+        // everything went well, we can compose the message, as usually
             
     $emailText = "You have a new message from your contact form\n=============================\n";
 
